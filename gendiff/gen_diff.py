@@ -30,3 +30,6 @@ def generate_diff(file_1, file_2):
     string = '\n'.join(final_spisok)
     final_string = string.replace('"', '')
     return final_string
+
+
+print(generate_diff(file_1, file_2))
