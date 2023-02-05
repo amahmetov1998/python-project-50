@@ -13,3 +13,10 @@ jobs:
       run: poetry run pytest
     - name: run lint
       run: poetry run flake8 gendiff
+    - name: Test & publish code coverage
+      uses: paambaati/codeclimate-action@v3.2.0
+      if: github.ref_name == 'main'
+      env:
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      with:
+          coverageCommand: poetry run pytest --cov
