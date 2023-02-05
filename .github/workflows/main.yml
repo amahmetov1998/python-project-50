@@ -24,9 +24,7 @@ jobs:
       - name: install dependencies
         run: poetry install
       - uses: paambaati/codeclimate-action@v2.7.1
-        if: github.ref_name == 'main'
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
           coverageCommand: poetry run pytest --cov-report xml
-          debug: true
