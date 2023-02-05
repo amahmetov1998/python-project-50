@@ -13,10 +13,18 @@ jobs:
       run: poetry run pytest
     - name: run lint
       run: poetry run flake8 gendiff
-    - name: Test & publish code coverage
-      uses: paambaati/codeclimate-action@v3.2.0
-      if: github.ref_name == 'main'
-      env:
-        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-      with:
+  coverage:
+      needs: linter_and_test
+      name: coverage
+      runs-on: ubuntu-latest
+      steps:
+      - uses: actions/checkout@v3
+      - name: install poetry
+        run: pip install poetry
+      - name: install dependencies
+        run: poetry install
+      - uses: paambaati/codeclimate-action@v2.2.4
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        with:
           coverageCommand: poetry run pytest --cov
