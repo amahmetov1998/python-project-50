@@ -1,0 +1,11 @@
+name: run tests and linter
+
+on: push
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Print Hello Message
+      run: echo "Hello world"
