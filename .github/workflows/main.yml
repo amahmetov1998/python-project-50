@@ -1,8 +1,15 @@
 name: linter
 on: push
 jobs:
-  testing:
+  linter_and_test:
     runs-on: ubuntu-latest
     steps:
-    - name: First hello
-      run: echo 'Hello world'
+    - uses: actions/checkout@v3
+    - name: install poetry
+      run: pip install poetry
+    - name: install dependencies
+      run: poetry install
+    - name: run pytest
+      run: poetry run pytest
+    - name: run lint
+      run: poetry run flake8 gendiff
