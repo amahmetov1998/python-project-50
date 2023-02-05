@@ -1,7 +1,7 @@
 import json
 
 
-def generate_diff(file1, file2): 
+def generate_diff(file1, file2):
     file_1 = json.load(open(file1))
     file_2 = json.load(open(file2))
     spisok = []
