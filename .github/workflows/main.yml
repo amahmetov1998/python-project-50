@@ -1,4 +1,4 @@
-name: linter
+name: run test and linter
 on: push
 jobs:
   linter_and_test:
