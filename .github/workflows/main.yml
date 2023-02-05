@@ -1,0 +1,8 @@
+name: linter
+on: push
+jobs:
+  testing:
+    runs-on: ubuntu-latest
+    steps:
+    - name: First hello
+      run: echo 'Hello world'
