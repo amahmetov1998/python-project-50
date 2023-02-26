@@ -40,7 +40,8 @@ def get_stylish(value, replacer=' ', spaces_count=4):  # noqa: C901
                     )
             elif 'status' in val \
                     and 'value_1' in val \
-                    and not isinstance(val['value_1'], dict):
+                    and not isinstance(val['value_1'], dict)\
+                    and not isinstance(val['value_2'], dict):
                 result_list.append(
                     f'{deep_indent}- {key}: {val["value_1"]}'
                 )
