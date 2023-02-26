@@ -3,14 +3,14 @@ from gendiff import generate_diff
 from gendiff.open_file import open_file
 from gendiff.parse_file import parse_file
 from gendiff.get_file_extension import get_file_extension
-plain_json_file_1 = 'gendiff/files/plain_file1.json'
-plain_json_file_2 = 'gendiff/files/plain_file2.json'
-plain_yaml_file_1 = 'gendiff/files/plain_file1.yaml'
-plain_yaml_file_2 = 'gendiff/files/plain_file2.yaml'
-nested_json_file_1 = 'gendiff/files/nested_file1.json'
-nested_json_file_2 = 'gendiff/files/nested_file2.json'
-nested_yaml_file_1 = 'gendiff/files/nested_file1.yaml'
-nested_yaml_file_2 = 'gendiff/files/nested_file2.yaml'
+plain_json_file_1 = 'tests/fixtures/plain_file1.json'
+plain_json_file_2 = 'tests/fixtures/plain_file2.json'
+plain_yaml_file_1 = 'tests/fixtures/plain_file1.yaml'
+plain_yaml_file_2 = 'tests/fixtures/plain_file2.yaml'
+nested_json_file_1 = 'tests/fixtures/nested_file1.json'
+nested_json_file_2 = 'tests/fixtures/nested_file2.json'
+nested_yaml_file_1 = 'tests/fixtures/nested_file1.yaml'
+nested_yaml_file_2 = 'tests/fixtures/nested_file2.yaml'
 
 
 @pytest.mark.parametrize('file_1, file_2, format, expected',
