@@ -1,5 +1,6 @@
 import json
 
+
 def get_plain(value):  # noqa: C901
     for key, val in value.items():
         if isinstance(val, dict):
