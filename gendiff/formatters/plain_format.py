@@ -35,7 +35,8 @@ def get_plain(value):  # noqa: C901
                     and not isinstance(val['value_2'], dict):
                 result_list.append(
                     f"""Property '{string}{key}' was updated. From {
-                    json.dumps(val["value_1"])} to {json.dumps(val["value_2"])}"""
+                    json.dumps(val["value_1"])} to {
+                    json.dumps(val["value_2"])}"""
                 )
             elif 'status' in val \
                     and 'value_1' in val \
