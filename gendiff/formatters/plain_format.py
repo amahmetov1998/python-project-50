@@ -28,19 +28,29 @@ def get_plain(value):  # noqa: C901
                     )
             elif 'status' in val \
                     and 'value_1' in val \
-                    and not isinstance(val['value_1'], dict):
+                    and not isinstance(val['value_1'], dict)\
+                    and not isinstance(val['value_2'], dict):
                 result_list.append(
                     f"""Property '{string}{key}' was updated. From '{
                     val["value_1"]}' to '{val["value_2"]}'"""
                 )
             elif 'status' in val \
                     and 'value_1' in val \
-                    and (isinstance(val['value_1'], dict) or isinstance(
-                        val['value_2'], dict)):
+                    and isinstance(val['value_1'], dict) \
+                    and not isinstance(val['value_2'], dict):
+                result_list.append(
+                    f"""Property '{string}{key
+                    }' was updated. From [complex value] to '{
+                    val["value_2"]}'"""
+                )
+            elif 'status' in val \
+                    and 'value_1' in val \
+                    and not isinstance(val['value_1'], dict) \
+                    and isinstance(val['value_2'], dict):
                 result_list.append(
                     f"""Property '{
-                    string}{key}' was updated. From [complex value] to '{iter(
-                        val["value_2"], string=string + f"{key}.")}'"""
+                    string}{key}' was updated. From '{
+                    val["value_1"]}' to [complex value]"""
                 )
             elif 'status' in val and isinstance(val['value'], dict):
                 if val['status'] == 'added':
