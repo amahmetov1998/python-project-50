@@ -8,11 +8,11 @@ from gendiff.parse_file import parse_file
 from gendiff.get_file_extension import get_file_extension
 
 
-def generate_diff(file_1, file_2, file_format='stylish'):
-    opened_file_1, opened_file_2 = open_file(file_1), \
-        open_file(file_2)
-    extension_1, extension_2 = get_file_extension(file_1), \
-        get_file_extension(file_2)
+def generate_diff(filepath_1, filepath_2, file_format='stylish'):
+    opened_file_1, opened_file_2 = open_file(filepath_1), \
+        open_file(filepath_2)
+    extension_1, extension_2 = get_file_extension(filepath_1), \
+        get_file_extension(filepath_2)
     parsed_file_1, parsed_file_2 = parse_file(opened_file_1, extension_1), \
         parse_file(opened_file_2, extension_2)
     diff_tree = make_diff(parsed_file_1, parsed_file_2)

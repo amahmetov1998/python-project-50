@@ -1,4 +1,4 @@
-def make_diff(nested_1, nested_2):  # noqa: C901
+def make_diff(value_1, value_2):  # noqa: C901
     def inner(node_1, node_2):
         keys = node_1.keys() | node_2.keys()
         result = {}
@@ -22,4 +22,4 @@ def make_diff(nested_1, nested_2):  # noqa: C901
                     result[key] = {'status': 'changed', 'value_1': node_1[key],
                                    'value_2': node_2[key]}
         return result
-    return inner(nested_1, nested_2)
+    return inner(value_1, value_2)
