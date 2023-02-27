@@ -1,7 +1,7 @@
 from gendiff.get_diff import make_diff
-from gendiff.formatters.stylish_format import get_stylish
-from gendiff.formatters.plain_format import get_plain
-from gendiff.formatters.json_format import get_json
+from gendiff.formatters.stylish import get_stylish
+from gendiff.formatters.plain import get_plain
+from gendiff.formatters.json import get_json
 
 from gendiff.open_file import open_file
 from gendiff.parse_file import parse_file
