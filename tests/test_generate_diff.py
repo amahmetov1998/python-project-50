@@ -1,6 +1,6 @@
 import pytest
 from gendiff import generate_diff
-from gendiff.open_file import open_file
+from gendiff.open import open_file
 
 plain_json_file_1 = 'tests/fixtures/plain_file1.json'
 plain_json_file_2 = 'tests/fixtures/plain_file2.json'
