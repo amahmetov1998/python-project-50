@@ -1,7 +1,15 @@
 import json
+from gendiff.constants import ADDED, NESTED, CHANGED, DELETED
+
+ADD_COMPLEX = "Property '{s}{k}' was added with value: [complex value]"
+ADD_VALUE = "Property '{s}{k}' was added with value: {v}"
+DELETE_VALUE = "Property '{s}{k}' was removed"
+UPDATE_TO_COMPLEX = "Property '{s}{k}' was updated. From {v} to [complex value]"
+UPDATE_TO_VALUE = "Property '{s}{k}' was updated. From [complex value] to {v}"
+UPDATE_VALUE_TO_VALUE = "Property '{s}{k}' was updated. From {v_1} to {v_2}"
 
 
-def get_plain(value):  # noqa: C901
+def get_plain(value):
     for key, val in value.items():
         if isinstance(val, dict):
             get_plain(val)
@@ -18,60 +26,56 @@ def get_plain(value):  # noqa: C901
         for key, val in current_value.items():
             if isinstance(val, int):
                 result_list.append(f'{key}: {val}')
-            elif 'status' in val and 'value_1' not in val \
-                    and not isinstance(val['value'], dict):
-                if val['status'] == 'added':
+            elif 'status' in val:
+                if val['status'] == NESTED:
                     result_list.append(
-                        f"""Property '{string}{key}' was added with value: {
-                        json.dumps(val["value"])}"""
+                        iter(val['value'], string=string + f"{key}.")
                     )
-                elif val['status'] == 'deleted':
+                elif val['status'] == ADDED:
+                    if isinstance(val["value"], dict):
+                        result_list.append(
+                            ADD_COMPLEX.format(s=string, k=key)
+                        )
+                    else:
+                        result_list.append(
+                            ADD_VALUE.format(
+                                s=string, k=key, v=json.dumps(val["value"])
+                            )
+                        )
+                elif val['status'] == DELETED:
                     result_list.append(
-                        f"""Property '{string}{key}' was removed"""
+                        DELETE_VALUE.format(s=string, k=key)
                     )
-            elif 'status' in val \
-                    and 'value_1' in val \
-                    and not isinstance(val['value_1'], dict)\
-                    and not isinstance(val['value_2'], dict):
-                result_list.append(
-                    f"""Property '{string}{key}' was updated. From {
-                    json.dumps(val["value_1"])} to {
-                    json.dumps(val["value_2"])}"""
-                )
-            elif 'status' in val \
-                    and 'value_1' in val \
-                    and isinstance(val['value_1'], dict) \
-                    and not isinstance(val['value_2'], dict):
-                result_list.append(
-                    f"""Property '{string}{key
-                    }' was updated. From [complex value] to {json.dumps(
-                    val["value_2"])}"""
-                )
-            elif 'status' in val \
-                    and 'value_1' in val \
-                    and not isinstance(val['value_1'], dict) \
-                    and isinstance(val['value_2'], dict):
-                result_list.append(
-                    f"""Property '{
-                    string}{key}' was updated. From {json.dumps(
-                    val["value_1"])} to [complex value]"""
-                )
-            elif 'status' in val and isinstance(val['value'], dict):
-                if val['status'] == 'added':
-                    result_list.append(
-                        f'''Property '{string}{
-                        key}' was added with value: [complex value]'''
-                    )
-                elif val['status'] == 'deleted':
-                    result_list.append(
-                        f'''Property '{string}{key}' was removed'''
-                    )
+                elif val['status'] == CHANGED:
+                    if isinstance(val["value_1"], dict) \
+                            and not isinstance(val["value_2"], dict):
+                        result_list.append(
+                            UPDATE_TO_VALUE.format(
+                                s=string, k=key, v=json.dumps(val["value_2"])
+                            )
+                        )
+                    elif isinstance(val["value_2"], dict) \
+                            and not isinstance(val["value_1"], dict):
+                        result_list.append(
+                            UPDATE_TO_COMPLEX.format(
+                                s=string, k=key, v=json.dumps(val["value_1"])
+                            )
+                        )
+                    else:
+                        result_list.append(
+                            UPDATE_VALUE_TO_VALUE.format(
+                                s=string, k=key, v_1=json.dumps(val["value_1"]),
+                                v_2=json.dumps(val["value_2"])
+                            )
+                        )
             else:
                 result_list.append(
                     iter(val, string=string + f"{key}.")
                 )
         string = '\n'.join(result_list)
-        return string.replace('''"''', """'""").replace(
+        return string.replace(
+            '''"''', """'""").replace(
             "'false'", "false").replace(
-            "'true'", "true").replace("'null'", "null")
+            "'true'", "true").replace(
+            "'null'", "null")
     return iter(value, '')

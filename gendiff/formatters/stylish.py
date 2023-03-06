@@ -1,7 +1,8 @@
 import itertools
+from gendiff.constants import ADDED, NESTED, CHANGED, DELETED
 
 
-def get_stylish(value, replacer=' ', spaces_count=4):  # noqa: C901
+def get_stylish(value, replacer=' ', spaces_count=4):
     for key, val in value.items():
         if isinstance(val, dict):
             get_stylish(val)
@@ -23,56 +24,23 @@ def get_stylish(value, replacer=' ', spaces_count=4):  # noqa: C901
                 result_list.append(
                     f'{replacer * deep_indent_size}{key}: {val}'
                 )
-            elif 'status' in val \
-                    and 'value_1' not in val\
-                    and not isinstance(val['value'], dict):
-                if val['status'] == 'added':
+            elif 'status' in val:
+                if val['status'] == NESTED:
                     result_list.append(
-                        f'{deep_indent}+ {key}: {val["value"]}'
+                        f'{replacer * deep_indent_size}'
+                        f'{key}: {iter(val["value"], deep_indent_size)}'
                     )
-                elif val['status'] == 'deleted':
-                    result_list.append(
-                        f'{deep_indent}- {key}: {val["value"]}'
-                    )
-                else:
-                    result_list.append(
-                        f'{replacer * deep_indent_size}{key}: {val["value"]}'
-                    )
-            elif 'status' in val \
-                    and 'value_1' in val \
-                    and not isinstance(val['value_1'], dict)\
-                    and not isinstance(val['value_2'], dict):
-                result_list.append(
-                    f'{deep_indent}- {key}: {val["value_1"]}'
-                )
-                result_list.append(
-                    f'{deep_indent}+ {key}: {val["value_2"]}'
-                )
-            elif 'status' in val \
-                    and 'value_1' in val \
-                    and (isinstance(val['value_1'], dict
-                                    ) or isinstance(val['value_2'], dict)):
-                result_list.append(
-                    f'{deep_indent}- '
-                    f'{key}: {iter(val["value_1"], deep_indent_size)}'
-                )
-                result_list.append(
-                    f'{deep_indent}+ '
-                    f'{key}: {iter(val["value_2"], deep_indent_size)}'
-                )
-            elif 'status' in val \
-                    and isinstance(val['value'], dict):
-                if val['status'] == 'added':
+                elif val['status'] == ADDED:
                     result_list.append(
                         f'{deep_indent}+ '
                         f'{key}: {iter(val["value"], deep_indent_size)}'
                     )
-                elif val['status'] == 'deleted':
+                elif val['status'] == DELETED:
                     result_list.append(
                         f'{deep_indent}- '
                         f'{key}: {iter(val["value"], deep_indent_size)}'
                     )
-                elif val['status'] == 'changed':
+                elif val['status'] == CHANGED:
                     result_list.append(
                         f'{deep_indent}- '
                         f'{key}: {iter(val["value_1"], deep_indent_size)}'
@@ -83,7 +51,7 @@ def get_stylish(value, replacer=' ', spaces_count=4):  # noqa: C901
                     )
                 else:
                     result_list.append(
-                        f'{replacer * deep_indent_size}'
+                        f'{deep_indent}  '
                         f'{key}: {iter(val["value"], deep_indent_size)}'
                     )
             else:
