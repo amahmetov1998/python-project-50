@@ -8,7 +8,7 @@
 
 ### Description
 
-The project generates differences between JSON and YAML files.
+The program generates differences between JSON and YAML files.
 
 ### Installation
 
