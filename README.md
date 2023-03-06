@@ -36,7 +36,6 @@ gendiff <file_path1> <file_path2>
 gendiff <file_path1> <file_path2>
 ```
 <a href="https://asciinema.org/a/5hRFB1OZgv2xiZB1KjevERfpf" target="_blank"><img src="https://asciinema.org/a/5hRFB1OZgv2xiZB1KjevERfpf.svg" /></a>
-<a href="https://asciinema.org/a/AWADDMSTgQyL0IZyuwAYzBp5j" target="_blank"><img src="https://asciinema.org/a/AWADDMSTgQyL0IZyuwAYzBp5j.svg" /></a>
 #### Plain format of output
 ```
 gendiff --format plain <file_path1> <file_path2>
