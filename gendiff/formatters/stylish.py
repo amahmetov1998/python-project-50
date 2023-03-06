@@ -2,7 +2,7 @@ import itertools
 from gendiff.constants import ADDED, NESTED, CHANGED, DELETED
 
 
-def get_stylish(value, replacer=' ', spaces_count=4):
+def get_stylish(value, replacer=' ', spaces_count=4):  # noqa:C901
     for key, val in value.items():
         if isinstance(val, dict):
             get_stylish(val)

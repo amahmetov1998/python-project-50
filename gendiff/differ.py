@@ -1,7 +1,7 @@
 from gendiff.constants import ADDED, NESTED, CHANGED, UNCHANGED, DELETED
 
 
-def build_diff(value_1, value_2):
+def build_diff(value_1, value_2):  # noqa:C901
     def inner(node_1, node_2):
         keys = node_1.keys() | node_2.keys()
         result = {}

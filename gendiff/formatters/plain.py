@@ -9,7 +9,7 @@ UPDATE_TO_VALUE = "Property '{s}{k}' was updated. From [complex value] to {v}"
 UPDATE_VALUE_TO_VALUE = "Property '{s}{k}' was updated. From {v_1} to {v_2}"
 
 
-def get_plain(value):
+def get_plain(value):  # noqa:C901
     for key, val in value.items():
         if isinstance(val, dict):
             get_plain(val)
